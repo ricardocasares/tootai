@@ -1,0 +1,10 @@
+.empty {
+  align-items: center;
+  justify-content: center;
+}
+
+.help {
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+}

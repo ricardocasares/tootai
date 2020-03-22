@@ -1,0 +1,24 @@
+.deck {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.link {
+  padding: 20px;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:first-child {
+  flex: 2;
+}
+
+.action {
+  color: #666;
+  cursor: pointer;
+}
+
+.delete {
+  color: #ff6b6b;
+}

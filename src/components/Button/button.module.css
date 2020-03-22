@@ -1,0 +1,10 @@
+.btn {
+  padding: 15px;
+  border: none;
+  background: transparent;
+  appearance: none;
+}
+
+.btnSmall {
+  padding: 0;
+}

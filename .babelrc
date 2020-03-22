@@ -1,0 +1,15 @@
+{
+  "sourceMaps": true,
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@": "./src"
+        }
+      }
+    ]
+  ]
+}
