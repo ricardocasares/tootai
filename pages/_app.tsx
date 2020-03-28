@@ -1,4 +1,5 @@
 import "@/css/global.css";
+
 import Head from "next/head";
 import { AppProps } from "next/app";
 import { Frame } from "@/components/Frame";

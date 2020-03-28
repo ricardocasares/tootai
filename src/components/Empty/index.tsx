@@ -1,9 +1,9 @@
-import { FunctionComponent } from "react";
+import css from "./empty.module.css";
+import { FunctionComponent as F } from "react";
 import { Plus } from "react-bytesize-icons";
 import { Frame } from "@/components/Frame";
-import css from "./empty.module.css";
 
-export const Empty: FunctionComponent = ({ children }) => (
+export const Empty: F = ({ children }) => (
   <Frame className={css.empty}>
     <Plus
       strokeWidth="4"

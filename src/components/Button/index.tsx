@@ -1,49 +1,48 @@
 import css from "./button.module.css";
-import { FunctionComponent, HTMLProps } from "react";
+
+import { FunctionComponent as F, HTMLProps } from "react";
 import {
   Plus,
-  Trash as Bin,
+  Trash,
   Edit as Pencil,
   ArrowLeft,
   ArrowRight
 } from "react-bytesize-icons";
 
-export const Base: FunctionComponent<HTMLProps<HTMLButtonElement>> = ({
-  children,
-  className,
-  ...props
-}) => (
+export type Button = F<HTMLProps<HTMLButtonElement>>;
+
+export const Base: Button = ({ children, className, ...props }) => (
   <button {...props} type="button" className={`${css.btn} ${className}`}>
     {children}
   </button>
 );
 
-export const Add: FunctionComponent<HTMLProps<HTMLButtonElement>> = props => (
+export const Add: Button = props => (
   <Base {...props}>
     <Plus color={"#fff"} />
   </Base>
 );
 
-export const Next: FunctionComponent<HTMLProps<HTMLButtonElement>> = props => (
+export const Next: Button = props => (
   <Base {...props} className={css.btnSmall}>
     <ArrowRight color={"#777"} width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
-export const Prev: FunctionComponent<HTMLProps<HTMLButtonElement>> = props => (
+export const Prev: Button = props => (
   <Base {...props} className={css.btnSmall}>
     <ArrowLeft color={"#777"} width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
-export const Edit: FunctionComponent<HTMLProps<HTMLButtonElement>> = props => (
+export const Edit: Button = props => (
   <Base {...props} className={css.btnSmall}>
     <Pencil color={"#777"} width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
-export const Trash: FunctionComponent<HTMLProps<HTMLButtonElement>> = props => (
+export const Delete: Button = props => (
   <Base {...props} className={css.btnSmall}>
-    <Bin color={"#ff6b6b"} width={20} height={20} strokeWidth="3" />
+    <Trash color={"#ff6b6b"} width={20} height={20} strokeWidth="3" />
   </Base>
 );

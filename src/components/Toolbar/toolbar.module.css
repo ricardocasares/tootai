@@ -3,6 +3,6 @@
   background: #eee;
   color: #666;
   padding: 10px;
-  text-align: center;
+  align-items: center;
   justify-content: space-between;
 }

@@ -1,55 +1,62 @@
+import { useKey } from "react-use";
 import { uuid } from "@/lib/uuid";
-import { useRouter } from "next/router";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Nav } from "@/components/Nav";
 import { Frame } from "@/components/Frame";
 import { Add } from "@/components/Button";
 import { Deck } from "@/components/Deck";
 import { Empty } from "@/components/Empty";
-import { Deck as DeckType } from "@/interfaces";
+import { Deck as DeckType } from "@/types";
 
 export default () => {
-  const router = useRouter();
-  const { value, setValue } = useLocalStorage<DeckType[]>("decks", []);
+  const [state, setState] = useLocalStorage<DeckType[]>("decks", []);
+
+  const handle = (fn: (x: string) => void, id: string) => () => fn(id);
 
   const add = () => {
     const name = prompt("Name?");
 
     if (name) {
-      const id = uuid();
-      setValue([...value, { id, name }]);
-      router.push(`/deck/${id}`);
+      setState([{ id: uuid(), name }, ...state]);
     }
   };
 
+  useKey("a", add, {}, state);
+
   const edit = (key: string) => {
-    const [deck] = value.filter(({ id }) => id === key);
+    const [deck] = state.filter(({ id }) => id === key);
     const name = prompt("Name?", deck.name) || deck.name;
-    setValue([...value.filter(({ id }) => id !== deck.id), { ...deck, name }]);
+    setState([...state.filter(({ id }) => id !== deck.id), { ...deck, name }]);
   };
 
   const remove = (key: string) => {
     const ok = confirm("Are you sure?");
 
     if (ok) {
-      setValue([...value.filter(({ id }) => id !== key)]);
+      setState([...state.filter(({ id }) => id !== key)]);
       localStorage.removeItem(key);
     }
   };
 
-  const decks = !!value.length;
+  const decks = !!state.length;
 
   return (
     <Frame>
       {decks && (
         <Frame>
-          {value.map(deck => (
-            <Deck key={deck.id} {...deck} edit={edit} remove={remove}></Deck>
+          {state.map(({ id, ...deck }) => (
+            <Deck
+              key={id}
+              {...{ id, ...deck }}
+              edit={handle(edit, id)}
+              remove={handle(remove, id)}
+            ></Deck>
           ))}
         </Frame>
       )}
 
       {!decks && <Empty>Add a deck!</Empty>}
+
       <Nav>
         <Add onClick={add}>Add deck</Add>
       </Nav>

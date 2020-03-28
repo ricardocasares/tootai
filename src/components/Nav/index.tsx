@@ -1,6 +1,6 @@
-import * as React from "react";
+import { FunctionComponent as F } from "react";
 import css from "./nav.module.css";
 
-export const Nav: React.FunctionComponent = ({ children }) => (
+export const Nav: F = ({ children }) => (
   <nav className={css.nav}>{children}</nav>
 );

@@ -1,5 +1,5 @@
 {
-  "name": "with-typescript",
+  "name": "tootai",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -10,11 +10,12 @@
   "dependencies": {
     "nanoid": "^2.1.11",
     "next": "latest",
-    "react-bytesize-icons": "^0.11.1",
     "preact": "^10.2.1",
     "preact-render-to-string": "^5.1.4",
     "react": "github:preact-compat/react#1.0.0",
-    "react-dom": "github:preact-compat/react-dom#1.0.0"
+    "react-bytesize-icons": "^0.11.1",
+    "react-dom": "github:preact-compat/react-dom#1.0.0",
+    "react-use": "^13.27.0"
   },
   "devDependencies": {
     "@types/nanoid": "^2.1.0",

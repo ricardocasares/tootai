@@ -1,49 +1,39 @@
 import { useState, useEffect } from "react";
 
-export function useLocalStorage<T>(key: string, init: T) {
-  const [value, setStoredValue] = useState<T>(init);
-  const listener = (ev: StorageEvent) => {
-    console.log(ev, ev.key, ev.storageArea);
-    if (ev.key === key) {
-      if (!ev.newValue) {
-        setStoredValue(init);
-      }
-      if (ev.newValue) {
-        try {
-          setStoredValue(JSON.parse(ev.newValue));
-        } catch (error) {
-          console.log(error);
-          setStoredValue(init);
-        }
-      }
+export const useLocalStorage = <T>(key: string, init: T) => {
+  const [state, setState] = useState<T>(init);
+
+  useEffect(() => {
+    const value = localStorage.getItem(key);
+
+    if (value) {
+      setState(JSON.parse(value));
     }
-  };
+  }, [key]);
 
   useEffect(() => {
     try {
-      const item = window.localStorage.getItem(key);
-      setStoredValue(item ? JSON.parse(item) : init);
+      if (!key) return;
+      localStorage.setItem(key, JSON.stringify(state));
     } catch (error) {
-      console.log(error);
-      setStoredValue(init);
+      console.error(error);
     }
-  }, []);
+  }, [init]);
 
   useEffect(() => {
-    window.addEventListener("storage", listener);
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
+  }, [key, init]);
 
-    return () => window.removeEventListener("storage", listener);
-  }, [value]);
-
-  const setValue = (value: T) => {
+  const handler = (e: StorageEvent) => {
     try {
-      const valueToStore = value instanceof Function ? value(value) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      if (e.key !== key) return;
+      if (e.newValue === null) setState(init);
+      if (e.newValue) setState(JSON.parse(e.newValue));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  return { value, setValue };
-}
+  return [state, setState] as const;
+};

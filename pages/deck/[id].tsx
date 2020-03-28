@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
-import { GetServerSideProps, NextPage } from "next";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useRouter } from "next/router";
+import { NextPage } from "next";
+import { useKey } from "react-use";
 import { uuid } from "@/lib/uuid";
-import { index } from "@/lib/array";
-import { Card as CardType } from "@/interfaces";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { Card as CardType } from "@/types";
 import { Nav } from "@/components/Nav";
 import { Card } from "@/components/Card";
 import { Empty } from "@/components/Empty";
@@ -13,53 +13,60 @@ import { Add } from "@/components/Button";
 import { Reply } from "react-bytesize-icons";
 import { Frame } from "@/components/Frame";
 
-type DeckPageProps = {
-  id: string;
-};
+type DeckPageProps = {};
 
-export const DeckPage: NextPage<DeckPageProps> = ({ id }) => {
-  const [active, setActive] = useState(0);
-  const { value, setValue } = useLocalStorage<CardType[]>(id, []);
+export const DeckPage: NextPage<DeckPageProps> = () => {
+  const router = useRouter();
+  const id = router.query.id as string;
 
-  const next = () => index(setActive, value, active, 1, 0);
-  const prev = () => index(setActive, value, active, -1, value.length - 1);
+  const [state, setState] = useLocalStorage<CardType[]>(id, []);
+  const [head, ...tail] = state;
+
+  const next = () => setState([...tail, head]);
+  const prev = () => {
+    const [prev, ...rest] = tail.reverse();
+    setState([prev, head, ...rest.reverse()]);
+  };
 
   const add = () => {
     const front = prompt("Front?");
     const back = front && prompt("Back?");
 
     if (back && front) {
-      setValue([...value, { id: uuid(), back, front }]);
-      setActive(value.length);
+      setState([{ id: uuid(), back, front }, ...state]);
     }
   };
 
   const edit = () => {
-    const front = prompt("Front?", card.front) || card.front;
-    const back = prompt("Back?", card.back) || card.back;
+    const front = prompt("Front?", head.front) || head.front;
+    const back = prompt("Back?", head.back) || head.back;
 
-    setValue([
-      ...value.filter(({ id }) => id !== card.id),
-      { ...card, back, front }
-    ]);
-
-    setActive(() => value.length - 1);
+    setState([{ ...head, front, back }, ...tail]);
   };
 
-  const remove = () =>
-    confirm("Sure?") && setValue([...value.filter(({ id }) => id !== card.id)]);
+  const remove = () => {
+    const ok = confirm("Sure?");
 
-  const card = value[active];
+    if (ok) {
+      setState(tail);
+    }
+  };
+
+  useKey("a", add, {}, [state]);
+  useKey("e", edit, {}, [state]);
+  useKey("d", remove, {}, [state]);
+  useKey("ArrowLeft", prev, {}, [state]);
+  useKey("ArrowRight", next, {}, [state]);
 
   return (
     <Frame>
-      {!card && <Empty>Add a card!</Empty>}
-      {card && <Card {...card}></Card>}
+      {!head && <Empty>Add a card!</Empty>}
 
-      {card && (
+      {head && <Card {...head}></Card>}
+
+      {head && (
         <Toolbar
-          total={value.length}
-          current={active + 1}
+          total={state.length}
           edit={edit}
           remove={remove}
           next={next}
@@ -78,9 +85,5 @@ export const DeckPage: NextPage<DeckPageProps> = ({ id }) => {
     </Frame>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async ctx => ({
-  props: { ...ctx.params }
-});
 
 export default DeckPage;
