@@ -8,6 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "classcat": "^4.0.2",
     "nanoid": "^2.1.11",
     "next": "latest",
     "preact": "^10.2.1",

@@ -3,6 +3,7 @@ import { uuid } from "@/lib/uuid";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Nav } from "@/components/Nav";
 import { Frame } from "@/components/Frame";
+import { Stack } from "@/components/Stack";
 import { Add } from "@/components/Button";
 import { Deck } from "@/components/Deck";
 import { Empty } from "@/components/Empty";
@@ -43,7 +44,7 @@ export default () => {
   return (
     <Frame>
       {decks && (
-        <Frame>
+        <Stack ss full border>
           {state.map(({ id, ...deck }) => (
             <Deck
               key={id}
@@ -52,7 +53,7 @@ export default () => {
               remove={handle(remove, id)}
             ></Deck>
           ))}
-        </Frame>
+        </Stack>
       )}
 
       {!decks && <Empty>Add a deck!</Empty>}
