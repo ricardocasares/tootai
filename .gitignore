@@ -1,4 +1,6 @@
+.DS_STORE
 .now
 node_modules
 .next
 *.log
+public/manifest.json
