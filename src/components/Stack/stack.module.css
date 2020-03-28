@@ -5,31 +5,15 @@
   overflow-y: scroll;
 }
 
-.stack.debug > * {
-  background: rgba(255, 0, 0, 0.5);
+.item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
 }
 
-.spacer {
-  width: 100%;
+.item.small {
+  padding: 5px;
 }
 
-.spacer.border {
-  border: none;
-  border-top: 1px solid #ddd;
-}
-
-.spacer.sx {
-  margin: 20px 0;
-}
-
-.spacer.sl {
-  margin: 15px 0;
-}
-
-.spacer.sm {
-  margin: 10px 0;
-}
-
-.spacer.ss {
-  margin: 5px 0;
+.item.large {
+  padding: 15px;
 }

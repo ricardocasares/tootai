@@ -24,25 +24,25 @@ export const Add: Button = props => (
 );
 
 export const Next: Button = props => (
-  <Base {...props} className={css.btnSmall}>
-    <ArrowRight color={"#777"} width={20} height={20} strokeWidth="3" />
+  <Base {...props} className={css.small}>
+    <ArrowRight width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
 export const Prev: Button = props => (
-  <Base {...props} className={css.btnSmall}>
-    <ArrowLeft color={"#777"} width={20} height={20} strokeWidth="3" />
+  <Base {...props} className={css.small}>
+    <ArrowLeft width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
 export const Edit: Button = props => (
-  <Base {...props} className={css.btnSmall}>
-    <Pencil color={"#777"} width={20} height={20} strokeWidth="3" />
+  <Base {...props} className={css.small}>
+    <Pencil width={20} height={20} strokeWidth="3" />
   </Base>
 );
 
 export const Delete: Button = props => (
-  <Base {...props} className={css.btnSmall}>
-    <Trash color={"#ff6b6b"} width={20} height={20} strokeWidth="3" />
+  <Base {...props} className={`${css.small} ${css.danger}`}>
+    <Trash width={20} height={20} strokeWidth="3" />
   </Base>
 );

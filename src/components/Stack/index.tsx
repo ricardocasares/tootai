@@ -4,32 +4,26 @@ import cc from "classcat";
 import { Children, ReactNode } from "react";
 import { FunctionComponent as F, HTMLProps } from "react";
 
-export type Stack = {
-  ss?: boolean;
-  sm?: boolean;
-  sl?: boolean;
-  sx?: boolean;
-  full?: boolean;
-  debug?: boolean;
-  border?: boolean;
-} & HTMLProps<HTMLDivElement>;
+export type StackItem = {
+  small?: boolean;
+  large?: boolean;
+};
 
-export const Stack: F<Stack> = ({
-  ss,
-  sm,
-  sl,
-  sx,
-  full,
-  debug,
-  border,
-  children,
-  className,
-  ...props
-}) => (
+export const StackItem: F<StackItem> = ({ small, large, children }) => (
+  <div className={cc([css.item, { [css.small]: small, [css.large]: large }])}>
+    {children}
+  </div>
+);
+
+export type Stack = {
+  full?: boolean;
+} & StackItem &
+  HTMLProps<HTMLDivElement>;
+
+export const Stack: F<Stack> = ({ full, children, className, ...props }) => (
   <div
     className={cc({
       [css.full]: full,
-      [css.debug]: debug,
       [css.stack]: true
     })}
     {...props}
@@ -37,17 +31,7 @@ export const Stack: F<Stack> = ({
     {Children.toArray(children).reduce<ReactNode[]>(
       ([head, ...tail], e) => [
         head,
-        e,
-        <hr
-          className={cc({
-            [css.ss]: ss,
-            [css.sm]: sm,
-            [css.sl]: sl,
-            [css.sx]: sx,
-            [css.spacer]: true,
-            [css.border]: border
-          })}
-        />,
+        <StackItem {...props}>{e}</StackItem>,
         ...tail
       ],
       []

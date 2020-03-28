@@ -14,11 +14,11 @@ type Toolbar = {
 export const Toolbar: F<Toolbar> = ({ total, edit, remove, prev, next }) => {
   return (
     <div className={css.toolbar}>
-      <small>{total} cards</small>
       <Delete onClick={remove} />
       <Edit onClick={edit} />
-      <Prev onClick={prev} />
-      <Next onClick={next} />
+      <small>{total} cards</small>
+      <Prev onClick={prev} disabled={total === 1} />
+      <Next onClick={next} disabled={total === 1} />
     </div>
   );
 };

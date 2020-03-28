@@ -22,8 +22,13 @@ export const DeckPage: NextPage<DeckPageProps> = () => {
   const [state, setState] = useLocalStorage<CardType[]>(id, []);
   const [head, ...tail] = state;
 
-  const next = () => setState([...tail, head]);
+  const next = () => {
+    if (!tail.length) return;
+    setState([...tail, head]);
+  };
+
   const prev = () => {
+    if (!tail.length) return;
     const [prev, ...rest] = tail.reverse();
     setState([prev, head, ...rest.reverse()]);
   };
@@ -62,7 +67,7 @@ export const DeckPage: NextPage<DeckPageProps> = () => {
     <Frame>
       {!head && <Empty>Add a card!</Empty>}
 
-      {head && <Card {...head}></Card>}
+      {head && <Card {...head} next={next} prev={prev} />}
 
       {head && (
         <Toolbar

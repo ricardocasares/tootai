@@ -27,7 +27,7 @@ export default () => {
   const edit = (key: string) => {
     const [deck] = state.filter(({ id }) => id === key);
     const name = prompt("Name?", deck.name) || deck.name;
-    setState([...state.filter(({ id }) => id !== deck.id), { ...deck, name }]);
+    setState([{ ...deck, name }, ...state.filter(({ id }) => id !== deck.id)]);
   };
 
   const remove = (key: string) => {
@@ -44,7 +44,7 @@ export default () => {
   return (
     <Frame>
       {decks && (
-        <Stack ss full border>
+        <Stack full>
           {state.map(({ id, ...deck }) => (
             <Deck
               key={id}

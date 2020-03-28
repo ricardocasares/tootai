@@ -1,10 +1,19 @@
 .btn {
-  padding: 15px;
   border: none;
-  background: transparent;
   appearance: none;
+  padding: 15px;
+  background: transparent;
+  color: #666;
 }
 
-.btnSmall {
+.btn[type="button"]:disabled {
+  color: #ccc;
+}
+
+.small {
   padding: 0;
+}
+
+.danger {
+  color: rgba(255, 0, 0, 0.75);
 }

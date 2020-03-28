@@ -1,33 +1,29 @@
 import css from "./deck.module.css";
 
 import Link from "next/link";
-import { FunctionComponent as F, HTMLProps } from "react";
-import { Trash, Edit } from "react-bytesize-icons";
+import { FunctionComponent as F } from "react";
+import { HTMLMotionProps } from "framer-motion";
+import { Edit, Delete } from "@/components/Button";
 import { Deck as DeckType } from "@/types";
+import { Fader } from "../Fader";
 
 type Deck = {
   edit: () => void;
   remove: () => void;
 } & DeckType &
-  HTMLProps<HTMLDivElement>;
+  HTMLMotionProps<"div">;
+
+const style = { padding: "20px" };
 
 export const Deck: F<Deck> = ({ id, name, edit, remove, ...props }) => {
-  const action = `${css.link} ${css.action}`;
-  const danger = `${action} ${css.delete}`;
-
   return (
-    <div className={css.deck} {...props}>
+    <Fader className={css.deck} {...props}>
       <Link href={`/deck/[id]`} as={`/deck/${id}`}>
         <a className={css.link}>{name}</a>
       </Link>
 
-      <a className={danger} onClick={remove}>
-        <Trash height={16} width={16} />
-      </a>
-
-      <a className={action} onClick={edit}>
-        <Edit height={16} width={16} />
-      </a>
-    </div>
+      <Delete onClick={remove} style={style} />
+      <Edit onClick={edit} style={style} />
+    </Fader>
   );
 };
