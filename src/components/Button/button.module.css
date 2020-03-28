@@ -1,9 +1,9 @@
 .btn {
   border: none;
   appearance: none;
-  padding: 15px;
+  padding: 10px;
   background: transparent;
-  color: #666;
+  color: #4c6ef5;
 }
 
 .btn[type="button"]:disabled {

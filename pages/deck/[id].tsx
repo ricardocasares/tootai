@@ -81,7 +81,7 @@ export const DeckPage: NextPage<DeckPageProps> = () => {
 
       <Nav>
         <Link href="/">
-          <a style={{ padding: "15px" }}>
+          <a style={{ padding: "10px" }}>
             <Reply color={"#fff"} />
           </a>
         </Link>
