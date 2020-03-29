@@ -1,5 +1,7 @@
 .deck {
   display: flex;
+  border-radius: 5px;
+  background: #ffffff;
 }
 
 .link {
