@@ -10,7 +10,7 @@
   "dependencies": {
     "classcat": "^4.0.2",
     "framer-motion": "^1.10.2",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.31",
     "next": "latest",
     "preact": "^10.2.1",
     "preact-render-to-string": "^5.1.4",
